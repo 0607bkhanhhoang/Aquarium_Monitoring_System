@@ -1,139 +1,66 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page with Line Charts</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <h1>Home Page with Line Charts</h1>
-    <canvas id="lineChart" width="800" height="400"></canvas>
-
-    <script>
-        // Initialize chart variables
-        let lineChart;
-        const maxDataPoints = 10; // Maximum data points to display
-
-        async function fetchData() {
-            try {
-                const response = await fetch('/data');
-                const data = await response.json();
-
-                // Update the chart with new data
-                updateChart(lineChart, data.channel_1, data.channel_2, data.channel_3);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-
-        function initializeChart() {
-            const ctx = document.getElementById('lineChart').getContext('2d');
-            lineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({ length: maxDataPoints }, (_, i) => i + 1), // Placeholder labels
-                    datasets: [
-                        {
-                            label: 'Channel 1',
-                            data: [],
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            fill: true,
-                            tension: 0.1
-                        },
-                        {
-                            label: 'Channel 2',
-                            data: [],
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            fill: true,
-                            tension: 0.1
-                        },
-                        {
-                            label: 'Channel 3',
-                            data: [],
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            fill: true,
-                            tension: 0.1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Time (last 10 updates)'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Value'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateChart(chart, data1, data2, data3) {
-            chart.data.datasets[0].data = data1;
-            chart.data.datasets[1].data = data2;
-            chart.data.datasets[2].data = data3;
-
-            // Update the labels to reflect the latest timestamps or indices
-            chart.data.labels = Array.from({ length: data1.length }, (_, i) => i + 1);
-
-            chart.update(); // Refresh the chart
-        }
-
-        // Fetch data every 10 seconds
-        setInterval(fetchData, 10000);
-        window.onload = () => {
-            initializeChart();
-            fetchData();
-        };
-    </script>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real Time Data Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .charts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Home Page with Separate Line Charts</h1>
-    
-    <div>
-        <h3>Channel 1</h3>
-        <canvas id="lineChart1" width="400" height="400"></canvas>
-    </div>
-    <div>
-        <h3>Channel 2</h3>
-        <canvas id="lineChart2" width="400" height="400"></canvas>
-    </div>
-    <div>
-        <h3>Channel 3</h3>
-        <canvas id="lineChart3" width="400" height="400"></canvas>
-    </div>
-    <div>
-        <h3>Channel 4</h3>
-        <canvas id="lineChart4" width="400" height="400"></canvas>
-    </div>
-    <div>
-        <h3>Channel 5</h3>
-        <canvas id="lineChart5" width="400" height="400"></canvas>
-    </div>
-    <div>
-        <h3>Channel 6</h3>
-        <canvas id="lineChart6" width="400" height="400"></canvas>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-dark">
+        <a class="navbar-brand text-xl" href="#">IOT-APP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link text-xl" href="/home">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link text-xl" href="/FrontPage">Video</a>
+                <a class="nav-link text-xl" href="/webcam">WebCam</a>
+                <a class="nav-link active text-xl" href="/charts">RealtimeChart</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h1 class="text-center">Home Page with Separate Line Charts</h1>
+
+        <div class="charts">
+            <div>
+                <h3>Channel 1</h3>
+                <canvas id="lineChart1" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <h3>Channel 2</h3>
+                <canvas id="lineChart2" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <h3>Channel 3</h3>
+                <canvas id="lineChart3" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <h3>Channel 4</h3>
+                <canvas id="lineChart4" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <h3>Channel 5</h3>
+                <canvas id="lineChart5" width="400" height="400"></canvas>
+            </div>
+            <div>
+                <h3>Channel 6</h3>
+                <canvas id="lineChart6" width="400" height="400"></canvas>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -145,7 +72,7 @@
             try {
                 const response = await fetch('/data');
                 const data = await response.json();
-                
+
                 const timestamps = Array.from({ length: data.channel_1.length }, (_, i) => {
                     const now = new Date();
                     return new Date(now.getTime() - (data.channel_1.length - 1 - i) * 10000).toLocaleTimeString();
@@ -220,5 +147,12 @@
         // Fetch data every 10 seconds
         setInterval(fetchData, 10000);
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
