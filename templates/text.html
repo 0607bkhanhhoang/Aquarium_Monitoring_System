@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Video</title>
+    <style>
+        body {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+            display: flex;
+            justify-content: space-between; /* To position elements on the left and right */
+        }
+
+        header.feature-box.top {
+            background-color: black;
+            height: 100px;
+            margin: 0px;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        header.feature-box.second {
+            background-color: rgb(13, 243, 220);
+            height: 50px;
+            text-align: center;
+            margin-top: -25px;
+            width: 100%;
+        }
+
+        .features {
+            background-color: black;
+            width: 900px;
+            height: 700px;
+            border-radius: 35px;
+            object-fit: contain;
+            margin: 20px;
+        }
+
+        section.col-sm {
+            background-color: black;
+            width: 1000px;
+            height: 650px;
+            border-radius: 35px;
+            object-fit: contain;
+            margin: 40px;
+        }
+
+        img {
+            width: 900px;
+            height: 600px;
+            border-radius: 35px;
+            object-fit: contain;
+            margin: 40px;
+        }
+
+        .new {
+            color: black;
+            margin: 0px;
+            padding: 10px;
+            background-color: green;
+            margin-top: -10px;
+        }
+
+        .right-side {
+            width: 300px;
+            margin: 40px;
+            text-align: center;
+        }
+
+        .right-side img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .right-side button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
+        }
+
+        .right-side button:hover {
+            background-color: #2980b9;
+        }
+
+    </style>
+</head>
+<body>
+
+<header class="feature-box top">
+    <h1><strong>Video Detection Function</strong></h1>
+</header>
+
+<header class="feature-box second">
+    <h1><strong>Output Video</strong></h1>
+</header>
+
+<section class="col-sm">
+    <img src="{{ url_for('video') }}" alt="Upload video">
+</section>
+
+<!-- Right Side Section -->
+<section class="right-side">
+    <img src="your-image.jpg" alt="Image on the right">
+    
+    <!-- Two Buttons -->
+    <button onclick="setA()">Button 1</button>
+    <button onclick="setB()">Button 2</button>
+</section>
+
+<section>
+    <div class="new">
+        <form method="POST" enctype="multipart/form-data" style="align-content: center; text-align: center; display: flex;">
+            {{ form.hidden_tag() }}
+            {{ form.file(class_="custom-file-input") }}
+
+            <div>
+                <button type="submit" name="favorite" value="x" class="btnCustom">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    // JavaScript for button functionality
+    let a = 0;
+    let b = 0;
+
+    function setA() {
+        a = 1;
+        b = 0; // Reset b when Button 1 is pressed
+        console.log("Variable a is set to:", a);
+        console.log("Variable b is reset to:", b);
+    }
+
+    function setB() {
+        b = 1;
+        a = 0; // Reset a when Button 2 is pressed
+        console.log("Variable b is set to:", b);
+        console.log("Variable a is reset to:", a);
+    }
+</script>
+
+</body>
+</html>

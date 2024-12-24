@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header.feature-box.top {
+            background-color: rgb(18, 201, 225);
+            height: 100px;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header.feature-box.second {
+            background-color: rgb(255, 131, 236);
+            height: 50px;
+            text-align: center;
+            margin: 0;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .chart-section,
+        .video-section {
+            background-color: black;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .chart-section h2,
+        .video-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        canvas {
+            background-color: white;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        .video-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<header class="feature-box top">
+    <h1><strong>Milestone 2 Report</strong></h1>
+</header>
+<header class="feature-box second">
+    <h1><strong>Dashboard</strong></h1>
+</header>
+
+<!-- Main Content -->
+<div class="main-container">
+
+    <!-- Line Charts Section -->
+    <div class="chart-section">
+        <h2>Live Line Charts</h2>
+        <div class="chart-container">
+            <canvas id="lineChart1" width="400" height="300"></canvas>
+            <canvas id="lineChart2" width="400" height="300"></canvas>
+            <canvas id="lineChart3" width="400" height="300"></canvas>
+        </div>
+    </div>
+
+    <!-- Video Section -->
+    <div class="video-section">
+        <h2>Output Video</h2>
+        <div class="video-container">
+            <img src="{{ url_for('webapp') }}" alt="Upload video">
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Initialize chart variables
+    let lineChart1, lineChart2, lineChart3;
+    const maxDataPoints = 10;
+
+    async function fetchData(
