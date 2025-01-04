@@ -28,77 +28,79 @@ data_buffer = {
 }
 
 @app.route('/data', methods=['POST'])
+
 def generate_data():
     global data_buffer
-    
+
     # Generate random values for line charts
-    # new_type1 = random.randint(10, 100)
-    # new_type2 = random.uniform(20, 80)
-    # new_type3 = random.uniform(5, 50)
-    
-    # # Update the buffers for line charts
-    # data_buffer["channel_1"].append(new_type1)
-    # data_buffer["channel_2"].append(new_type2)
-    # data_buffer["channel_3"].append(new_type3)
-    # print("Generated new data 1")
-    
-    # # Keep only the last 10 values
-    # data_buffer["channel_1"] = data_buffer["channel_1"][-10:]
-    # data_buffer["channel_2"] = data_buffer["channel_2"][-10:]
-    # data_buffer["channel_3"] = data_buffer["channel_3"][-10:]
-    # print("Generated new data 2")
-    
-    # # Generate random values for pie charts
-    # data_buffer["channel_4"] = [random.randint(1, 50) for _ in range(10)]
-    # data_buffer["channel_5"] = [random.randint(1, 50) for _ in range(10)]
-    # data_buffer["channel_6"] = [random.randint(1, 50) for _ in range(10)]
-    # print("Generated new data 3")
+    new_type1 = random.randint(10, 100)
+    new_type2 = random.uniform(20, 80)
+    new_type3 = random.uniform(5, 50)
+    new_type4 = random.randint(10, 100)
+    new_type5 = random.uniform(20, 80)
+    new_type6 = random.uniform(5, 50)
 
-    # Read the content length to get the size of the incoming data
-    # content_length = int(self.headers['Content-Length'])
-    # print("Captured the content length")
-    # post_data = self.rfile.read(content_length)  # Read the incoming data
+    # Update the buffers for line charts
+    data_buffer["channel_1"].append(new_type1)
+    data_buffer["channel_2"].append(new_type2)
+    data_buffer["channel_3"].append(new_type3)
+    data_buffer["channel_4"].append(new_type4)
+    data_buffer["channel_5"].append(new_type5)
+    data_buffer["channel_6"].append(new_type6)
+    print("Generated new data for all channels.")
 
-    # try:
-    #     # Parse the JSON data
-    #     data = json.loads(post_data)
-    #     channel_1 = data.get("channel_1")
-    #     channel_2 = data.get("channel_2")
-    #     channel_3 = data.get("channel_3")
-    #     channel_4 = data.get("channel_4") 
-    #     # Print the received data
-    #     print(f"Received: channel_1={channel_1}, channel_2={channel_2}, channel_3={channel_3}")
+    # Keep only the last 20 values in the buffer
+    data_buffer["channel_1"] = data_buffer["channel_1"][-20:]
+    data_buffer["channel_2"] = data_buffer["channel_2"][-20:]
+    data_buffer["channel_3"] = data_buffer["channel_3"][-20:]
+    data_buffer["channel_4"] = data_buffer["channel_4"][-20:]
+    data_buffer["channel_5"] = data_buffer["channel_5"][-20:]
+    data_buffer["channel_6"] = data_buffer["channel_6"][-20:]
 
-    #     # Send a response
-    #     self.send_response(200)
-    #     self.send_header('Content-Type', 'application/json')
-    #     self.end_headers()
-    #     response = {"message": "Data received successfully"}
-    #     self.wfile.write(json.dumps(response).encode('utf-8'))
+    # Create post_data dictionary
+    post_data = {
+        "channel_1": new_type1,
+        "channel_2": new_type2,
+        "channel_3": new_type3,
+        "channel_4": new_type4,
+        "channel_5": new_type5,
+        "channel_6": new_type6
+    }
 
-    # except json.JSONDecodeError:
-    #     # Handle JSON parsing error
-    #     self.send_response(400)
-    #     self.send_header('Content-Type', 'application/json')
-    #     self.end_headers()
-    #     response = {"error": "Invalid JSON data"}
-    #     self.wfile.write(json.dumps(response).encode('utf-8'))
-    # Validate the API key from headers
-    api_key = request.headers.get('API-Key')
-    if not api_key or not safe_str_cmp(api_key, API_KEY):
-        app.logger.warning("Unauthorized access attempt")
-        return jsonify({"error": "Unauthorized"}), 401
-
-    # Process the incoming JSON payload
     try:
-        data = request.json
-        if not data:
-            raise ValueError("No JSON data provided")
-        app.logger.info(f"Received data: {data}")
-        return jsonify({"status": "success"}), 200
+        # Convert dictionary to JSON string
+        data_json = json.dumps(post_data)
+
+        # Parse JSON string back to a Python dictionary
+        data = json.loads(data_json)
+
+        # Access values from the dictionary
+        channel_1 = data.get("channel_1")
+        channel_2 = data.get("channel_2")
+        channel_3 = data.get("channel_3")
+        channel_4 = data.get("channel_4")
+        channel_5 = data.get("channel_5")
+        channel_6 = data.get("channel_6")
+
+        # Print the received data
+        print(f"Received: channel_1={channel_1}, channel_2={channel_2}, "
+              f"channel_3={channel_3}, channel_4={channel_4}, "
+              f"channel_5={channel_5}, channel_6={channel_6}")
+
+        # Simulate a response
+        response = {"message": "Data received successfully"}
+        return response
+
+    except json.JSONDecodeError:
+        # Handle JSON parsing error
+        print("Error: Invalid JSON data")
+        return {"error": "Invalid JSON data"}
+
     except Exception as e:
-        app.logger.error(f"Error processing data: {str(e)}")
-        return jsonify({"error": "Invalid data"}), 400
+        # Catch-all for any other errors
+        print(f"Error processing data: {str(e)}")
+        return {"error": "An error occurred"}
+
     
 
 def random_data_generator():
@@ -154,15 +156,34 @@ def generate_frames(path_x = ''):
                     b'Content-Type: image/jpeg\r\n\r\n' + frame +b'\r\n')
 
 
+# def generate_frames_web(path_x):
+#     yolo_output = video_detection(path_x)
+#     for detection_ in yolo_output:
+#         ref,buffer=cv2.imencode('.jpg',detection_)
+
+#         frame=buffer.tobytes()
+#         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame +b'\r\n')
+
+import cv2
+
 def generate_frames_web(path_x):
-    yolo_output = video_detection(path_x)
+    yolo_output = video_detection(path_x)  # Generator producing detected frames
+
     for detection_ in yolo_output:
-        ref,buffer=cv2.imencode('.jpg',detection_)
+        if detection_ is None:
+            print("Received an invalid frame. Skipping...")
+            continue
 
-        frame=buffer.tobytes()
+        # Encode the frame as JPEG
+        success, buffer = cv2.imencode('.jpg', detection_)
+        if not success:
+            print("Failed to encode frame. Skipping...")
+            continue
+
+        # Convert buffer to bytes and yield as an HTTP frame
+        frame = buffer.tobytes()
         yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + frame +b'\r\n')
-
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/', methods=['GET','POST'])
 @app.route('/home', methods=['GET','POST'])
@@ -172,7 +193,6 @@ def home():
 
 
 @app.route("/webcam", methods=['GET','POST'])
-
 
 def webcam():
     session.clear()
