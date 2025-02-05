@@ -170,15 +170,12 @@
             <canvas id="lineChart1" width="400" height="300"></canvas>
             <canvas id="lineChart2" width="400" height="300"></canvas>
             <canvas id="lineChart3" width="400" height="300"></canvas>
-            <canvas id="lineChart4" width="400" height="300"></canvas>
-            <canvas id="lineChart5" width="400" height="300"></canvas>
-            <canvas id="lineChart6" width="400" height="300"></canvas>
         </div>
     </div>
 
     <!-- Video Section -->
     <div class="video-section">
-        <h2>Output WEBCAM DETECTION</h2>
+        <h2>Output Video</h2>
         <div class="video-container">
             <img src="{{ url_for('webapp') }}" alt="Upload video">
         </div>
@@ -188,27 +185,7 @@
 
 <script>
     // Initialize chart variables
-    let lineChart1, lineChart2, lineChart3,lineChart4, lineChart5, lineChart6;
+    let lineChart1, lineChart2, lineChart3;
     const maxDataPoints = 10;
 
-    async function fetchData() {
-            try {
-                const response = await fetch('/data');
-                const data = await response.json();
-                
-                const timestamps = Array.from({ length: data.channel_1.length }, (_, i) => {
-                    const now = new Date();
-                    return new Date(now.getTime() - (data.channel_1.length - 1 - i) * 10000).toLocaleTimeString();
-                });
-
-                // Update the charts with new data
-                updateChart(lineChart1, timestamps, data.channel_1);
-                updateChart(lineChart2, timestamps, data.channel_2);
-                updateChart(lineChart3, timestamps, data.channel_3);
-                updateChart(lineChart4, timestamps, data.channel_4);
-                updateChart(lineChart5, timestamps, data.channel_5);
-                updateChart(lineChart6, timestamps, data.channel_6);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
+    async function fetchData(

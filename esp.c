@@ -9,10 +9,10 @@
 #include "nvs_flash.h"
 #include "esp_http_client.h"
 
-#define WIFI_SSID "Your_SSID"
-#define WIFI_PASS "Your_PASSWORD"
+#define WIFI_SSID "Tenda_3AD020_5G"
+#define WIFI_PASS "pshcso01"
 
-#define SERVER_URL "http://<PC_IP>:5000/data"  // Replace <PC_IP> with your PC's local IP
+#define SERVER_URL "http://192.168.0.162:5000/data"  // Replace <PC_IP> with your PC's local IP
 
 static const char *TAG = "HTTP_CLIENT";
 
