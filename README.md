@@ -14,6 +14,20 @@ This is my milestone project at Ho Chi Minh University of Technology . This proj
 2. Web can detect by **Video** and **Real time Detecting** using YOLO and UCLA Star Model.
 3. Data Collection and charts for analysis by Java.
 
+# FLOW OF THE SYSTEM
+
+:pushpin: System Overview
+![The System Overview Diagram](https://github.com/0607bkhanhhoang/Aquarium_Monitoring_System/blob/main/image/Schematics.png)
+
+:pushpin: Component of the node
+
 # HARDWARE Viewer
 
+:pushpin: **Schematics**
+
+:pushpin: **Design View 2D**
+
 :pushpin: **Design View 3D, Left Corner View**
+
+
+
